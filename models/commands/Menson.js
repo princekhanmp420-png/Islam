@@ -20,7 +20,7 @@ module.exports.run = async function ({ api, event }) {
             return api.sendMessage("❌ গ্রুপে কাউকে খুঁজে পাওয়া যায়নি।", event.threadID, event.messageID);
         }
 
-        api.sendMessage(`প্রিন্স স্যার এই গ্রুপে মোট ${members.length} জন সবাইকে  mention করা হলো🥰...`, event.threadID);
+        api.sendMessage(`ফাউন্ডেশনের মোট সহযোদ্ধা ${members.length} জন সবাইকে পরামর্শের জন্য কলে ডাকা হলো...`, event.threadID);
 
         for (let i = 0; i < members.length; i++) {
             let user = members[i];
@@ -29,7 +29,7 @@ module.exports.run = async function ({ api, event }) {
                 tag: user.name
             }];
 
-            let msg = `👉 ${i + 1}. ${user.name} কলে আসেন🥰`;
+            let msg = `👉 ${i + 1}. ${user.name} কলে আসেন সহযোদ্ধা🥰`;
 
             // প্রতি মেসেজের মাঝে 1.5 সেকেন্ড Delay
             await new Promise(resolve => setTimeout(resolve, 1500));
@@ -37,7 +37,7 @@ module.exports.run = async function ({ api, event }) {
             api.sendMessage({ body: msg, mentions }, event.threadID);
         }
 
-        api.sendMessage("✅প্রিন্স স্যার সবাইকে mention করা শেষ হয়েছে😘🥰", event.threadID);
+        api.sendMessage("সবাইকে কলে ডাকা হয়েছে আশা করি সবাই কলে আসবেন 🖤", event.threadID);
 
     } catch (e) {
         console.log(e);
