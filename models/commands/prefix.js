@@ -25,9 +25,9 @@ module.exports.handleEvent = async ({ event, api, Threads }) => {
     if (body === i.toUpperCase() | body === i | str === body) {
 const prefix = threadSetting.PREFIX || global.config.PREFIX;
       if (data.PREFIX == null) {
-        return out(`This Is My Prefix ⇉ [ ${prefix} ]\n💝🥀𝐎𝐖𝐍𝐄𝐑:- ☞𝚙𝚛𝚒𝙽𝚌𝚎 𝙼𝚘𝚛𝚂𝚑𝚎𝚍☜ 💫\n🖤🖤\n😳𝐇𝐢𝐬 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐢𝐝🤓:- ☞ https://www.facebook.com/Islamic.Fundation \n👋For Any Kind Of Help Contact On Whatsapp: wa.me/https://www.facebook.com/Islamic.Fundation😇`)
+        return out(`This Is My Prefix ⇉ [ ${prefix} ]\n💝 ফাউন্ডেশনের নাম:- ☞আত- তাক্বওয়া ফাউন্ডেশন☜ 💫\n🖤🖤\n🥰 ফাউন্ডেশনের পেজ🖤:- ☞ https://www.facebook.com/Islamic.Fundation \n👋For Any Kind Of Help Contact On Whatsapp: wa.me/https://www.facebook.com/Islamic.Fundation😇`)
       }
-      else return out('️️️️️️️️️️️️️️️️️️️️️️️️️️️This Is My Prefix ⇉ [ ${prefix} ]  \n💝🥀𝐎𝐖𝐍𝐄𝐑:- ☞Prince Morshed☜ 💫\n🖤🖤\n😳𝐇𝐢𝐬 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐢𝐝🤓:- ☞https://www.facebook.com/Islamic.Fundation\n👋For Any Kind Of Help Contact On Whatsapp: wa. https://www.facebook.com/Islamic.Fundation😇' + data.PREFIX)
+      else return out('️️️️️️️️️️️️️️️️️️️️️️️️️️️This Is My Prefix ⇉ [ ${prefix} ]  \n💝 ফাউন্ডেশনের নাম:- ☞আত- তাক্বওয়া ফাউন্ডেশন☜ 💫\n🖤🖤\n🖤ফাউন্ডেশন এর পেজ🖤:- ☞https://www.facebook.com/Islamic.Fundation\n👋For Any Kind Of Help Contact On Whatsapp: wa. https://www.facebook.com/Islamic.Fundation😇' + data.PREFIX)
     }
 
   });
