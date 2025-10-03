@@ -101,7 +101,7 @@ module.exports = {
       await api.sendMessage(
         {
           attachment: fs.createReadStream(downloadPath),
-          body: `🖤 Title: ${topResult.title}\n\n Here is your ${
+          body: `🖤 Title: ${topResult.title}\n\n দয়া করে খারাপ ভিডিও লিংক দিবেন না ইসলামিক কাজে আমাকে ব্যবহার করুন 🖤 ${
             type === "audio" ? "audio" : "video"
           } 🎧:`,
         },
