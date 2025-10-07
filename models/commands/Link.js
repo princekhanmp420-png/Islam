@@ -23,19 +23,19 @@ module.exports.handleEvent = async function ({ api, event }) {
 
         // ✅ গ্রুপ সম্পর্কিত শব্দ
         const groupKeywords = [
-            "Group link",
+            "group link",
             "gc link",
             "গ্রুপ লিংক",
             "facebook গ্রুপের লিংক",
             "গ্রুপ লিংক দাও",
-            "Facebook group er link",
+            "group er link",
             "group dao",
             "grouper link"
         ];
 
         // ✅ পেজ সম্পর্কিত শব্দ
         const pageKeywords = [
-            "Page link",
+            "page link",
             "page dao",
             "ফেসবুক পেজ",
             "পেজ লিংক",
