@@ -2,13 +2,13 @@ const axios = require("axios");
 const apiUrl = "https://baby-apis-nix.vercel.app";
 
 const initialReplies = [
-  "বল বেবি 💬", 
-  "হুম জানু 😚", 
-  "শুনছি বেবি 😘",
-  "😚", 
-  "Yes 😀, I am here", 
-  "What's up?", 
-  "বলো জান কি করতে পারি তোমার জন্য",
+  "ওয়ালাইকুম আসসালাম", 
+  "ওয়ালাইকুম আসসালাম😚", 
+  "ওয়ালাইকুম আসসালাম😘",
+  "ওয়ালাইকুম আসসালাম🥰", 
+  "ওয়ালাইকুম আসসালাম🤗", 
+  "ওয়ালাইকুম আসসালাম", 
+  "ওয়ালাইকুম আসসালাম🫶🥀",
 ];
 
 const getRand = () => initialReplies[Math.floor(Math.random() * initialReplies.length)];
@@ -132,4 +132,90 @@ module.exports.run = async function ({ api, event, args, Users }) {
          return api.sendMessage("❌ | Use: edit [msg] - [oldReply] - [newReply]", event.threadID, event.messageID);
       }
       
-      const res = await axios.get(`${apiUrl}/baby-edit?key=${encodeURIComponent(oldMsg)}&oldReply=$
+      const res = await axios.get(`${apiUrl}/baby-edit?key=${encodeURIComponent(oldMsg)}&oldReply=${encodeURIComponent(oldReply)}&newReply=${encodeURIComponent(newReply)}&senderID=${uid}`);
+      return api.sendMessage(res.data.message || "Edited successfully.", event.threadID, event.messageID);
+    }
+
+    if (args[0] === "teach" && args[1] === "react") {
+      const parts = query.split(/\s*-\s*/).map(p => p.trim());
+      const final = parts[0].replace("teach react", "").trim();
+      const cmd = parts[1];
+      
+      if (!final || !cmd) {
+        return api.sendMessage("❌ | Invalid format! Use: teach react [msg] - [react1, react2]", event.threadID, event.messageID);
+      }
+      const res = await axios.get(`${apiUrl}/baby?teach=${encodeURIComponent(final)}&react=${encodeURIComponent(cmd)}&senderID=${uid}`);
+      return api.sendMessage(`✅ Replies added ${res.data.message}`, event.threadID, event.messageID);
+    }
+
+    if (args[0] === "teach") {
+      const parts = query.split(/\s*-\s*/).map(p => p.trim());
+      const final = parts[0].replace("teach", "").trim();
+      const cmd = parts[1];
+      
+      if (!final || !cmd) {
+        return api.sendMessage("❌ | Invalid format! Use: teach [msg] - [reply1, reply2]", event.threadID, event.messageID);
+      }
+      
+      const res = await axios.get(`${apiUrl}/baby?teach=${encodeURIComponent(final)}&reply=${encodeURIComponent(cmd)}&senderID=${uid}`);
+      const teacher = await Users.getNameUser(uid).catch(() => uid);
+      
+      if (res.data.addedReplies?.length === 0) {
+        const existingMsg = res.data.existingReplies?.join(", ") || "all replies";
+        return api.sendMessage(`❌ | All replies already exist for this question.\nExisting: ${existingMsg}`, event.threadID, event.messageID);
+      }
+      
+      const teachsRes = await axios.get(`${apiUrl}/teachers`);
+      const teachCount = teachsRes.data.teachers?.[uid] || 0;
+      const addedReplies = res.data.addedReplies?.join(", ") || cmd;
+      
+      return api.sendMessage(`✅ | Replies added "${addedReplies}" to "${final}".\nTeacher: ${teacher}\nTeachs: ${teachCount}`, event.threadID, event.messageID);
+    }
+
+    handleReplyMsg(api, event, query);
+  } catch (err) {
+    console.error("Error in baby command:", err);
+    return api.sendMessage(`❌ | Error in baby command: ${err.message}`, event.threadID, event.messageID);
+  }
+};
+
+module.exports.handleReply = async function ({ api, event }) {
+  if (!event.body) return;
+  handleReplyMsg(api, event, event.body.toLowerCase());
+};
+
+module.exports.handleEvent = async function ({ api, event, Users }) {
+  try {
+    if (!event.body) return;
+    const raw = event.body.toLowerCase().trim();
+    const senderName = await Users.getNameUser(event.senderID);
+    const senderID = event.senderID;
+    
+    const match = raw.match(/^(আসসালামুয়ালাইকুম|আসসালামু আলাইকুম|Asalamualaikum |আসসালামু আলাইকুম|সালাম|Salam|asalamualaikum|Asalamualaikum 🖤|আসসালামু আলাইকুম🥰|আসসালামু আলাইকুম)\s*(.*)/);
+    if (!match) return;
+    
+    const rest = match[2]?.trim();
+    
+    if (!rest) {
+      const randomReply = getRand();
+      return api.sendMessage({
+        body: `${randomReply} @${senderName}`,
+        mentions: [{ tag: `@${senderName}`, id: senderID }]
+      }, event.threadID, (err, info) => {
+        if (!err) {
+          global.client.handleReply.push({
+            name: module.exports.config.name,
+            messageID: info.messageID,
+            author: event.senderID,
+            type: "baby"
+          });
+        }
+      }, event.messageID);
+    }
+    
+    handleReplyMsg(api, event, rest);
+  } catch (err) {
+    console.error("Error in handleEvent:", err);
+    return api.sendMessage(`❌ | Error in handleEvent: ${err.message}`, event.threadID, event.messageID);
+  }
+};
