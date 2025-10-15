@@ -161,8 +161,8 @@ module.exports.handleEvent = async function ({ api, event, Users }) {
  const senderID = event.senderID;
 
  if (
- raw === "আসসালামু আলাইকুম" || raw === "bot" || raw === "bby" ||
- raw === "jan" || raw === "xan" || raw === "জান" || raw === "আসসালামু আলাইকুম" || raw === "বেবি" 
+ raw === "আসসালামু আলাইকুম" || raw === "Assalamualaikum 🌸" || raw === "Assalamualaikum" ||
+ raw === "Salam" || raw === "সালাম" || raw === "Assalamu walaikum 🥰" || raw === "আসসালামু আলাইকুম" || raw === "Assalamu walaikum" 
  ) {
  const greetings = [
  "ওয়ালাইকুম আসসালাম" 
